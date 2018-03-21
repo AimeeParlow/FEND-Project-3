@@ -1,3 +1,7 @@
+/*
+* {     border: 1px solid red !important;}
+*/
+
 html {
     box-sizing: border-box;
 }
@@ -87,8 +91,11 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 400px;
     margin-bottom: 10px;
+    display: flex;
+    flex-wrap; wrap;
+    flex-direction: row;
 }
 
 .score-panel .stars {
@@ -103,7 +110,16 @@ h1 {
     display: inline-block;
 }
 
+.score-panel .moves-count{
+	margin-left: 10px;
+}
+
+.score-panel .timer-area {
+	margin-left: 100px;
+}
+
 .score-panel .restart {
+    margin-left: 30px;
     float: right;
     cursor: pointer;
 }
