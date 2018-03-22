@@ -6,9 +6,10 @@ const myDeck = document.querySelector(".deck");
 let myCards = myDeck.querySelectorAll(".card");
 let cardList = [...myCards];
 const timeArea = document.getElementsByTagName('time')[0];
-const moves = document.getElementsByClassName('moves');
+let moves = document.getElementById('moves');
 let openedCard = [];
-let clickCount = [];
+let matchedCount = 0;
+let clickedCount = 0;
 /*
  * timer
  */
@@ -91,8 +92,11 @@ function setNewCards(){
 
  //to turn a card by clicking on the card
 	function turnCard() {
-this.classList.add('open', 'show');
-openedCard.push(this);
+		this.classList.add('open', 'show');
+		clickedCount ++;
+		console.log("clickedCount  " + clickedCount);
+		moves.textContent =clickedCount;
+		openedCard.push(this);
 
 	if (openedCard.length === 2) {
 
@@ -102,24 +106,63 @@ openedCard.push(this);
 }	
 
 //マッチしていたら、classを追加する。していなければ、裏返しにしてcardListを空にする。git git
+
 function matchCheck(){
 
-	console.log("matchCheck!");
-	
+
+
+
+		console.log("matchCheck!");
+
 	if(openedCard[0].lastElementChild.classList.item(1) === openedCard[1].lastElementChild.classList.item(1)){
 		openedCard[0].classList.add('match');
 		openedCard[1].classList.add('match');
-		console.log("yeah!!!!");
+		matchedCount ++;
+		console.log("yeah!!!!" + "matchedCount" + matchedCount);
+		openedCard = [];
 	}
+	
 	else {
 		console.log("Not match...");
+		setTimeout(function(){turnBack()},500);
+
 	}
 
  }
+ 
+
+
+   function turnBack(){ 
+		openedCard[0].classList.remove('open', 'show');
+		openedCard[1].classList.remove('open', 'show');
+		openedCard = [];
+   }
+
+ 
+ 
+
+
+/*
+ * action
+ */
+
+$(document).ready(function() {
+setNewCards();
+
+});
+
+$(myCards).click(function() {
+timeCount();
+});
+
+
 
 
 /* 使えそうなもの
 
+		clickedCount =+ 1;
+		console.log(clickedCount);
+	
 		openedCard[0].classList.remove('open', 'show');
 		openedCard[1].classList.remove('open', 'show');
 		
@@ -178,21 +221,6 @@ for (let a = 0; a > 2; a++){
 	console.log(openedCard[1]);	
 
 */
-
-/*
- * action
- */
-
-$(document).ready(function() {
-setNewCards();
-
-});
-
-$(myCards).click(function() {
-timeCount();
-});
-
-
 
 
 
