@@ -1,12 +1,14 @@
 /*
  * Create a list that holds all of your cards
  */
+
 const myDeck = document.querySelector(".deck");
 let myCards = myDeck.querySelectorAll(".card");
 let cardList = [...myCards];
 const timeArea = document.getElementsByTagName('time')[0];
-
-
+const moves = document.getElementsByClassName('moves');
+let openedCard = [];
+let clickCount = [];
 /*
  * timer
  */
@@ -41,10 +43,13 @@ function timeCount(){
  setTimeout("timeCount()", 1000);
 
 }
-
-
-
-
+const restartButton = document.getElementById("reset");
+restartButton.addEventListener("click", reset);
+	
+function reset(){
+ location.reload();
+}
+	
 
 
 /*
@@ -72,38 +77,114 @@ function shuffle(array) {
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
- 
-function newCards() {
-	
-	//to set new position for cards and to clear classes as default
+
+//to set new position for cards and to clear classes as default
+
+function setNewCards(){
 	cardList = shuffle(cardList);
-	let shuffledCards = [];
-	for (let i=0; i<cardList.length; i++) {
-		myDeck.innerHTML='';
-		shuffledCards.forEach.call(cardList, function(addNewCard){
-			myDeck.appendChild(addNewCard);
-	});
-	
-	cardList[i].classList.remove('match', 'open', 'show');
-
-	//to turn a card by clicking on the card
-	function turnCard(){
-		let openedCard =[];	
-		cardList[i].classList.add('open','show');
+	for (let i = 0; i < cardList.length; i++) {
+		cardList[i].classList.remove('match', 'open', 'show');
+		cardList[i].addEventListener("click", turnCard);
+		myDeck.appendChild(cardList[i]);
 	}
-		cardList[i].addEventListener("click",turnCard);
-	}
-	
-	//
-
 }
+
+ //to turn a card by clicking on the card
+	function turnCard() {
+this.classList.add('open', 'show');
+openedCard.push(this);
+
+	if (openedCard.length === 2) {
+
+		matchCheck();　//2枚目を開いたら、マッチしているかチェックする。
+		}
+
+}	
+
+//マッチしていたら、classを追加する。していなければ、裏返しにしてcardListを空にする。git git
+function matchCheck(){
+
+	console.log("matchCheck!");
+	
+	if(openedCard[0].lastElementChild.classList.item(1) === openedCard[1].lastElementChild.classList.item(1)){
+		openedCard[0].classList.add('match');
+		openedCard[1].classList.add('match');
+		console.log("yeah!!!!");
+	}
+	else {
+		console.log("Not match...");
+	}
+
+ }
+
+
+/* 使えそうなもの
+
+		openedCard[0].classList.remove('open', 'show');
+		openedCard[1].classList.remove('open', 'show');
+		
+		
+		
+let openedCard = myDeck.querySelectorAll(".open");
+let openedCardList = [...openedCard];
+if (openedCardList === 2) {
+	console.log ("ok!");
+	}else {
+		console.log ("ca marche!);
+	}
+	
+	let result = array[2];
+	result.add();
+	
+let openedCardArray[1] = myDeck.querySelectorAll(".open")[0];
+let openedCardArray[2] = myDeck.querySelectorAll(".open")[0];
+openedCardArray[1];
+
+let openedCard = myDeck.querySelectorAll(".open");
+let openedCardArray = [...openedCard];
+*/
+
+
+
+/*
+
+for (let a = 0; a < ; a++){
+let firstCard = openedCard[0];
+let secondCard = openedCard[1];
+
+if(firstCard.className === secondCard.className){
+		console.log("yeah!!!!");
+	}
+	else {
+		console.log("ok");
+	}
+	
+	
+let symbol = this.children;
+console.log(symbol);
+
+for (let a = 0; a > 2; a++){
+	openedCard[a].classList.remove('open', 'show');
+
+	let firstCard = openedCard[0];
+	console.log("firstCard" + firstCard);
+	let secondCard = openedCard[1];
+	console.log("second" + secondCard);
+}
+	let openedCardLength = openedCard.length;
+	let openedCardArray = openedCard[openedCardLength];
+		for (const openedCard of openedCardArray){
+	console.log(openedCard[0]);
+	console.log(openedCard[1]);	
+
+*/
 
 /*
  * action
  */
 
 $(document).ready(function() {
-newCards();
+setNewCards();
 
 });
 
