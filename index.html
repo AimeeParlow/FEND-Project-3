@@ -11,10 +11,14 @@
 </head>
 <body>
 
+<!--Header-->
+
     <div id= "game" class="container">
         <header>
-            <h1>Matching Game by Aimee</h1>
+            <h1>Matching Game by Aimée!</h1>
         </header>
+
+<!--score panel-->
 
         <section class="score-panel">
         	<ul id="star-rank" class="stars">
@@ -27,14 +31,16 @@
 				<span id="moves">0</span> Moves
 			</div>
 
-            <div id="timer-area">
+            <div id="timer-area" class="timer">
 				<time>00:00:00</time>
 			</div>
 			
-          <div id ="reset" class="restart">
-          		<i class="fa fa-repeat"></i>
-          </div>
+            <div id ="reset" class="restart">
+            	<i class="fa fa-repeat"></i>
+            </div>
         </section>
+
+<!--cardboard-->
 
         <ul class="deck">
             <li class="card">
@@ -87,9 +93,10 @@
             </li>
         </ul>
     </div>
-	
-	<!-- Result -->
-	<div id="result-area">
+
+<!--Result field-->
+
+	<div id="result-area" class="container">
 		<div id="result-content">
 			<span class="close">&times;</span>
 			<div id="result-text"></div>
@@ -102,6 +109,8 @@
 		</div>
 	</div>
 	
+<!--script link-->
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/app.js"></script>
 </body>
