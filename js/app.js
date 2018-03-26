@@ -29,12 +29,13 @@ $(myCards).click(function() {
  * timer
  */
 
+ //variables for timer...
 let timer;
 let time;
 let count = 0;
 let firstClick = false;
 
-//function for the time count...
+//time count...
 function timeCount(){
 	count++;
 	let sec = count;
@@ -106,26 +107,40 @@ function setNewCards(){
 
 //card actions after clicking it...
 function turnCard() {
-	this.classList.add('open', 'show');
-	clickedCount ++;
-	console.log("clickedCount " + clickedCount);//to check the count number...will be deleted before submission
-	moves.textContent =clickedCount;
-	openedCard.push(this);
+	/*if (this.classList.contains('open')){}
+	
+	else {
+		*/
+		this.classList.add('open', 'show');
+		clickedCount ++;
+		console.log("clickedCount " + clickedCount);//to check the count number...will be deleted before submission
+		moves.textContent = clickedCount;
+		openedCard.push(this);
 
-//when two cards were turned, call function to check their matching...
-	if (openedCard.length === 2) {
-		matchCheck();　
-	}
-}	
+
+		if (openedCard.length === 2) {//once the second card was turned, call matchCheck...
+			matchCheck();　
+		}
+	//}	
+}
 
 //to check if two opened cards are matched...
 function matchCheck(){
 	if(openedCard[0].lastElementChild.classList.item(1) === openedCard[1].lastElementChild.classList.item(1)){
 		openedCard[0].classList.add('match');
 		openedCard[1].classList.add('match');
-		matchedCount ++;
+
+		matchedCount++;
 		console.log("yeah!!!!  " + "matchedCount " + matchedCount); //to check the count number...will be deleted before submission
 		openedCard = [];
+		
+		if (matchedCount <8){
+			console.log("matchedCount <8");
+			}
+		else{
+			gameClear();
+		}
+		
 	}
 	
 	else {
@@ -133,7 +148,7 @@ function matchCheck(){
 		failedCount ++;
 		console.log("failedCount!!!!  " + failedCount); //to check the count number...will be deleted before submission
 		stars();
-		setTimeout(function(){turnBack()},500);
+		setTimeout(function(){turnBack()},300);
 	}
 }
 
@@ -145,12 +160,7 @@ function turnBack(){
 }
 
 
-//all cards are matched and go to the result page...
-/*if (matchedCount = 8) {
-	
-}
-*/
-
+//loosing stars 
 function stars(){
 	if (failedCount == 1){
 	$('.star:last').remove();
@@ -163,41 +173,70 @@ function stars(){
 	}	
 }
 
-// Get the modal
-var modal = document.getElementById('myModal');
+// variables for result area...
+let resultArea = document.getElementById('result-area');
+let resultContent = document.getElementById('result-content');
+let resultCloseButton = document.getElementsByClassName('close')[0];
+let resultText = document.getElementById('result-text');
+let clickedScore = document.getElementById('clicked-score');
+let timeScore = document.getElementById('time-score');
+let starScore = document.getElementById('star-score');
+let starArea = document.getElementById('star-rank');
+let gameBoard = document.getElementById('game');
+let playAgainButton = document.getElementById('play-again-button');
 
-// Get the <span> element that closes the modal
-var modalCloseButton = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
+// When the player lost the 3 stars, game is over and call failedResult... 
 function gameFailed() {
 	clearTimeout(timer);
 	failedResult();
-	modal.style.display = "block";
-	
+	resultArea.style.display = "block";
 }
 
+//to show the failed scoreboard...
 function failedResult(){
-	document.getElementById('result-text').innerHTML = "<b>GAME OVER!!!</b>";
-	document.getElementById('click-result').textContent = clickedCount + " Moves";
-	document.getElementById('time-result').textContent = "Time " + time;
-	
+	resultCloseButton.style.display = "block";
+	resultText.innerHTML = "<b>GAME OVER!!!</b>";
+	clickedScore.textContent = clickedCount + " Moves";
+	timeScore.textContent = "Time " + time;	
 }
 
-
-// When the user clicks on <span> (x), close the modal
-modalCloseButton.onclick = function() {
-    modal.style.display = "none";
+//to close the modal window by clicking x button...
+resultCloseButton.onclick = function() {
+    resultArea.style.display = "none";
 	reset();
 }
 
-// When the user clicks anywhere outside of the modal, close it
+//to close the modal window by clicking anywhere outside of the modal...
 window.onclick = function(event) {
-    if (event.target == modal) {
-		modal.style.display = "none";
+    if (event.target == resultArea) {
+		resultArea.style.display = "none";
 		reset();
     }
 }
+
+//to show cleared score...
+function gameClear(){
+		gameBoard.style.display = "none";
+		resultArea.style.display = "block";
+		playAgainButton.style.display = "block";
+		resultArea.style.padding = "250px";
+		resultContent.style.height = "300px";
+		resultContent.style.width = "400px";
+		resultContent.style.padding = "80px 20px 0 20px";
+		resultArea.style.backgroundColor = "rgba(0,0,0,0)";
+		resultText.innerHTML = "<b>YOU WON!!!</b>";
+		starScore.textContent = starArea;
+		starScore.style.display = "block";
+		clickedScore.textContent = clickedCount + " Moves";
+		timeScore.textContent = "Time: " + time;
+		playAgainButton.addEventListener("click", reset);
+				
+	}
+
+
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
