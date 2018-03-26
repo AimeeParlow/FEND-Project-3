@@ -143,7 +143,14 @@ h1 {
 
 #star-score {
 	display: none;
+	list-style: none;
+	padding-left: 135px;
 }
+
+#star-score li {
+	margin: 5px;
+}
+
 
 /* Modal Content */
 #result-content {

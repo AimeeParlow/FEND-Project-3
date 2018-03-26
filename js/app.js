@@ -180,8 +180,8 @@ let resultCloseButton = document.getElementsByClassName('close')[0];
 let resultText = document.getElementById('result-text');
 let clickedScore = document.getElementById('clicked-score');
 let timeScore = document.getElementById('time-score');
-let starScore = document.getElementById('star-score');
-let starArea = document.getElementById('star-rank');
+let starScore = document.getElementById('star-score');//new parent
+let starArea = document.getElementById('star-rank')//old parent
 let gameBoard = document.getElementById('game');
 let playAgainButton = document.getElementById('play-again-button');
 
@@ -217,23 +217,29 @@ window.onclick = function(event) {
 
 //to show cleared score...
 function gameClear(){
-		gameBoard.style.display = "none";
-		resultArea.style.display = "block";
-		playAgainButton.style.display = "block";
-		resultArea.style.padding = "250px";
-		resultContent.style.height = "300px";
-		resultContent.style.width = "400px";
-		resultContent.style.padding = "80px 20px 0 20px";
-		resultArea.style.backgroundColor = "rgba(0,0,0,0)";
-		resultText.innerHTML = "<b>YOU WON!!!</b>";
-		starScore.textContent = starArea;
-		starScore.style.display = "block";
-		clickedScore.textContent = clickedCount + " Moves";
-		timeScore.textContent = "Time: " + time;
-		playAgainButton.addEventListener("click", reset);
-				
-	}
+	gameBoard.style.display = "none";
+	resultArea.style.display = "block";
+	playAgainButton.style.display = "block";
+	resultArea.style.padding = "250px";
+	resultContent.style.height = "300px";
+	resultContent.style.width = "400px";
+	resultContent.style.padding = "80px 20px 0 20px";
+	resultContent.style.backgroundColor = "#ffe6ff";
+	resultArea.style.backgroundColor = "rgba(0,0,0,0)";
+	resultText.innerHTML = "<b>YOU WON!!!</b>";
+	starScore.style.display = "flex";
+	clickedScore.textContent = clickedCount + " Moves";
+	timeScore.textContent = "Time: " + time;
+	playAgainButton.addEventListener("click", reset);
+	starCount();
+}
 
+
+function starCount(){
+	while(starArea.childNodes.length > 0){
+		starScore.appendChild(starArea.childNodes[0]);
+	}
+}
 
 
 
