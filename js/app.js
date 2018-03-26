@@ -9,6 +9,8 @@ let cardList = [...myCards];
 let moves = document.getElementById('moves');
 const restartButton = document.getElementById("reset");
 let openedCard = [];
+let animationFinished = true;
+
 
 //variables for counting number...
 let matchedCount = 0;
@@ -108,16 +110,21 @@ function setNewCards(){
 
 //card actions after clicking it...
 function turnCard(){
-	if (this.classList.contains('open')){}
+	if (this.classList.contains('open')){}//to avoid double click on the opened card...
 	
 	else {
-		this.classList.add('open', 'show');
-		clickedCount ++;
-		moves.textContent = clickedCount;
-		openedCard.push(this);
-		if (openedCard.length === 2) {
-			matchCheck();　
-		}//once the second card was turned, call matchCheck...
+		if (animationFinished == false){}//to avoid to click on the third card before finishing matchCheck...
+		else {
+			this.classList.add('open', 'show');
+			clickedCount ++;
+			moves.textContent = clickedCount;
+			openedCard.push(this);
+			
+			if (openedCard.length === 2) {
+				animationFinished = false; 
+				matchCheck();　
+			}//once the second card was turned, call matchCheck...
+		}
 	}
 }
 
@@ -128,8 +135,9 @@ function matchCheck(){
 		openedCard[1].classList.add('match');
 		matchedCount++;
 		openedCard = [];//to clear the openedCard array...
+		animationFinished = true;
 		
-		if(matchedCount <8){}
+		if(matchedCount <8){}//not clear the game yet...
 		else{
 		setTimeout(function(){gameWon()},450);//you won...
 		}
@@ -147,6 +155,7 @@ function turnBack(){
 	openedCard[0].classList.remove('open', 'show');
 	openedCard[1].classList.remove('open', 'show');
 	openedCard = [];
+	animationFinished = true;
 }
 
 //loosing stars...
