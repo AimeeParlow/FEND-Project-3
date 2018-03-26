@@ -1,56 +1,74 @@
-/*
- * Create a list that holds all of your cards
- */
-
 const myDeck = document.querySelector(".deck");
 let myCards = myDeck.querySelectorAll(".card");
 let cardList = [...myCards];
-const timeArea = document.getElementsByTagName('time')[0];
+let timeArea = document.getElementsByTagName('time')[0];
 let moves = document.getElementById('moves');
 let openedCard = [];
 let matchedCount = 0;
 let clickedCount = 0;
+let failedCount = 0;
+const restartButton = document.getElementById("reset");
+
+
+/*
+ * action
+ */
+
+$(document).ready(function() {
+	setNewCards();
+});
+
+$(myCards).click(function() {
+	if (firstClick == false){
+	timeCount();
+	firstClick = true;
+	}	
+});
+
 /*
  * timer
  */
 
-let start = new Date();
+let timer;
+let time;
+let count = 0;
+let firstClick = false;
 
-// clear to default
-let hour = 0;
-let min = 0;
-let sec = 0;
-let now = 0;
-let countTime = 0;
-
+//function for the time count...
 function timeCount(){
+	count++;
+	let sec = count;
+	let min = 0;
+	let hour = 0;
 
- now = new Date();
- countTime = parseInt((now.getTime() - start.getTime()) / 1000);
- hour = parseInt(countTime / 3600);
- min = parseInt((countTime / 60) % 60);
- sec = countTime % 60;
-
- //add 0 to number less than 10
- if(hour < 10) { hour = "0" + hour; }
- if(min < 10) { min = "0" + min; }
- if(sec < 10) { sec = "0" + sec; }
-
- let time = hour + ':' + min + ':' + sec;
-
- //to the text field
- timeArea.textContent = time;
-
- setTimeout("timeCount()", 1000);
-
+	if(sec > 60){
+		min++;
+	}
+	if(min > 60){
+		hour++;
+	}
+	
+	if(sec < 10){ sec = "0" + sec };
+	if(min < 10){ min = "0" + min };	
+	if(hour < 10){ hour = "0" + hour };
+	
+	time = hour + ":" + min + ":" + sec;
+	
+	timeArea.textContent = time;
+	timer = setTimeout("timeCount()", 1000);
 }
-const restartButton = document.getElementById("reset");
+
+
+/*
+ * Restart button
+ */
+
 restartButton.addEventListener("click", reset);
-	
+
 function reset(){
- location.reload();
+	location.reload();
 }
-	
+
 
 
 /*
@@ -59,28 +77,24 @@ function reset(){
  
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+	var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+	while (currentIndex !== 0) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
 
-    return array;
+	return array;
 }
 
 /*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
+ * to set new cards and to play game...
  */
-
-//to set new position for cards and to clear classes as default
-
+ 
+//to set new cards as default...
 function setNewCards(){
 	cardList = shuffle(cardList);
 	for (let i = 0; i < cardList.length; i++) {
@@ -90,139 +104,100 @@ function setNewCards(){
 	}
 }
 
- //to turn a card by clicking on the card
-	function turnCard() {
-		this.classList.add('open', 'show');
-		clickedCount ++;
-		console.log("clickedCount  " + clickedCount);
-		moves.textContent =clickedCount;
-		openedCard.push(this);
+//card actions after clicking it...
+function turnCard() {
+	this.classList.add('open', 'show');
+	clickedCount ++;
+	console.log("clickedCount " + clickedCount);//to check the count number...will be deleted before submission
+	moves.textContent =clickedCount;
+	openedCard.push(this);
 
+//when two cards were turned, call function to check their matching...
 	if (openedCard.length === 2) {
-
-		matchCheck();　//2枚目を開いたら、マッチしているかチェックする。
-		}
-
+		matchCheck();　
+	}
 }	
 
-//マッチしていたら、classを追加する。していなければ、裏返しにしてcardListを空にする。git git
-
+//to check if two opened cards are matched...
 function matchCheck(){
-
-
-
-
-		console.log("matchCheck!");
-
 	if(openedCard[0].lastElementChild.classList.item(1) === openedCard[1].lastElementChild.classList.item(1)){
 		openedCard[0].classList.add('match');
 		openedCard[1].classList.add('match');
 		matchedCount ++;
-		console.log("yeah!!!!" + "matchedCount" + matchedCount);
+		console.log("yeah!!!!  " + "matchedCount " + matchedCount); //to check the count number...will be deleted before submission
 		openedCard = [];
 	}
 	
 	else {
 		console.log("Not match...");
+		failedCount ++;
+		console.log("failedCount!!!!  " + failedCount); //to check the count number...will be deleted before submission
+		stars();
 		setTimeout(function(){turnBack()},500);
-
 	}
+}
 
- }
- 
-
-
-   function turnBack(){ 
+//cards not matched and turn back to hide...
+function turnBack(){ 
 		openedCard[0].classList.remove('open', 'show');
 		openedCard[1].classList.remove('open', 'show');
 		openedCard = [];
-   }
-
- 
- 
-
-
-/*
- * action
- */
-
-$(document).ready(function() {
-setNewCards();
-
-});
-
-$(myCards).click(function() {
-timeCount();
-});
-
-
-
-
-/* 使えそうなもの
-
-		clickedCount =+ 1;
-		console.log(clickedCount);
-	
-		openedCard[0].classList.remove('open', 'show');
-		openedCard[1].classList.remove('open', 'show');
-		
-		
-		
-let openedCard = myDeck.querySelectorAll(".open");
-let openedCardList = [...openedCard];
-if (openedCardList === 2) {
-	console.log ("ok!");
-	}else {
-		console.log ("ca marche!);
-	}
-	
-	let result = array[2];
-	result.add();
-	
-let openedCardArray[1] = myDeck.querySelectorAll(".open")[0];
-let openedCardArray[2] = myDeck.querySelectorAll(".open")[0];
-openedCardArray[1];
-
-let openedCard = myDeck.querySelectorAll(".open");
-let openedCardArray = [...openedCard];
-*/
-
-
-
-/*
-
-for (let a = 0; a < ; a++){
-let firstCard = openedCard[0];
-let secondCard = openedCard[1];
-
-if(firstCard.className === secondCard.className){
-		console.log("yeah!!!!");
-	}
-	else {
-		console.log("ok");
-	}
-	
-	
-let symbol = this.children;
-console.log(symbol);
-
-for (let a = 0; a > 2; a++){
-	openedCard[a].classList.remove('open', 'show');
-
-	let firstCard = openedCard[0];
-	console.log("firstCard" + firstCard);
-	let secondCard = openedCard[1];
-	console.log("second" + secondCard);
 }
-	let openedCardLength = openedCard.length;
-	let openedCardArray = openedCard[openedCardLength];
-		for (const openedCard of openedCardArray){
-	console.log(openedCard[0]);
-	console.log(openedCard[1]);	
 
+
+//all cards are matched and go to the result page...
+/*if (matchedCount = 8) {
+	
+}
 */
 
+function stars(){
+	if (failedCount == 1){
+	$('.star:last').remove();
+	}
+	else if  (failedCount == 2){
+	$('.star:last').remove();
+	}
+	else if  (failedCount == 3){
+	gameFailed();
+	}	
+}
 
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the <span> element that closes the modal
+var modalCloseButton = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+function gameFailed() {
+	clearTimeout(timer);
+	failedResult();
+	modal.style.display = "block";
+	
+}
+
+function failedResult(){
+	document.getElementById('result-text').innerHTML = "<b>GAME OVER!!!</b>";
+	document.getElementById('click-result').textContent = clickedCount + " Moves";
+	document.getElementById('time-result').textContent = "Time " + time;
+	
+}
+
+
+// When the user clicks on <span> (x), close the modal
+modalCloseButton.onclick = function() {
+    modal.style.display = "none";
+	reset();
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+		modal.style.display = "none";
+		reset();
+    }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
