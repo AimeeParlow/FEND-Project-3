@@ -1,20 +1,50 @@
-# Memory Game Project
+# Aimée's Memory Game
+Memory Game is a simple card matching game.  
+
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Installation](#Installation)
+* [Instructions](#Instructions)
+* [License](#License)
+
+
+## Installation
+
+You can download all related files from [Github-AimeeParlow](https://github.com/AimeeParlow/FEND-Project-3.git)
+
+Please make sure that you have:
+- index.html
+- css/app.css
+- css/responsive.css
+- img/geometry2.png
+- README.md (this file)
+
+Please open 
+```
+index.html
+```
+and you are ready to start the game.
+
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+- Click any card and the time count will be started.
 
-To get started, open `js/app.js` and start building out the app's functionality
+- When you opened 2 cards and if they are matched, they will become in green, otherwise they will be turned back.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+- If you couple 8 pairs of card, then you win the game.
 
-## Contributing
+- If you make some mistakes, you loose a star. If you lose all tree stars, then you loose this game.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Bug fixed
+
+- [x] Solved - You can click the third card if you click very fast then that card would be stuck or frozen.
+- [x] Solved - If you double-click on the card, then the card would act as a matched card.
+
+
+## License
+
+Ai Parlow
+The original game file is from [Udacity](https://github.com/udacity/fend-project-memory-game)

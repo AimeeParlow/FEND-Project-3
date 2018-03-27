@@ -137,8 +137,8 @@ function matchCheck() {
 		openedCard = []; //to clear the openedCard array...
 		animationFinished = true;
 		
-		if (matchedCount == 8) {
-		setTimeout(function(){gameWon()},450); //you won...
+		if (matchedCount == 1) {
+		setTimeout(function(){gameWon()},700); //you won...
 		}
 	} else {
 		failedCount ++;
@@ -157,13 +157,13 @@ function turnBack() {
 
 //loosing stars...
 function stars() {
-	if(failedCount == 4){
+	if(failedCount == 1){
 	$('.star:last').remove();
-	} else if(failedCount == 8){
+	} else if(failedCount == 2){
 	$('.star:last').remove();
-	} else if(failedCount == 12){
+	} else if(failedCount == 3){
 	$('.star:last').remove();
-	gameFailed();
+	setTimeout(function(){gameFailed()},500);
 	}
 }
 
@@ -201,10 +201,6 @@ function gameWon() {
 	gameBoard.style.display = 'none';
 	resultArea.style.display = 'block';
 	playAgainButton.style.display = 'block';
-	resultArea.style.padding = '250px';
-	resultContent.style.height = '300px';
-	resultContent.style.width = '400px';
-	resultContent.style.padding = '80px 20px 0 20px';
 	resultContent.style.backgroundColor = '#ffe6ff';
 	resultArea.style.backgroundColor = 'rgba(0,0,0,0)';
 	resultText.innerHTML = "<b>YOU WON!</b>";
