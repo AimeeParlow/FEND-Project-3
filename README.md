@@ -35,7 +35,7 @@ and you are ready to start the game.
 
 - If you couple 8 pairs of card, then you win the game.
 
-- If you make some mistakes, you loose a star. If you lose all tree stars, then you loose this game.
+- If you make some mistakes, you loose a star. If you lose all three stars, then you loose this game.
 
 
 ## Bug fixed
@@ -47,4 +47,5 @@ and you are ready to start the game.
 ## License
 
 Ai Parlow
+
 The original game file is from [Udacity](https://github.com/udacity/fend-project-memory-game)

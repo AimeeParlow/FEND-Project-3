@@ -72,8 +72,9 @@ h1 {
 .deck .card.open {
     background: #02b3e4;
     cursor: default;
-	transition: transform ease .1s;
 	transform: rotateY(360deg);
+	transition: transform ease .08s;
+	transform-style: preserve-3d;
 }
 
 .deck .card.show {
@@ -84,9 +85,7 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
-	transition: transform ease .2s;
-	transform: rotate(360deg);
-	}
+}
 
 /*
  * Styles for the Score Panel
@@ -158,11 +157,6 @@ h1 {
 }
 
 /* result content */
-# result-area {
-	display: flex;
-	flex-wrap: wrap;
-}
-
 #result-content {
     background-color: #fefefe;
     margin: auto;

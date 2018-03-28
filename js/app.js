@@ -119,7 +119,6 @@ function turnCard(){
 			clickedCount ++;
 			moves.textContent = clickedCount;
 			openedCard.push(this);
-			
 			if (openedCard.length === 2) {
 				animationFinished = false; 
 				matchCheck();　
@@ -137,8 +136,8 @@ function matchCheck() {
 		openedCard = []; //to clear the openedCard array...
 		animationFinished = true;
 		
-		if (matchedCount == 1) {
-		setTimeout(function(){gameWon()},700); //you won...
+		if (matchedCount == 8) {
+		setTimeout(function(){gameWon()},400); //you won...
 		}
 	} else {
 		failedCount ++;
@@ -157,13 +156,13 @@ function turnBack() {
 
 //loosing stars...
 function stars() {
-	if(failedCount == 1){
+	if(failedCount == 4){
 	$('.star:last').remove();
-	} else if(failedCount == 2){
+	} else if(failedCount == 8){
 	$('.star:last').remove();
-	} else if(failedCount == 3){
+	} else if(failedCount == 12){
 	$('.star:last').remove();
-	setTimeout(function(){gameFailed()},500);
+	setTimeout(function(){gameFailed()},400);
 	}
 }
 
